@@ -1,4 +1,4 @@
-## Projeto Teste para a Petz
+## Projeto Teste para a DeliverIT
 
 Projeto Teste para a DeliverIT feito em React.js com as libs react-router-dom, styled-component e bootstrap
 
