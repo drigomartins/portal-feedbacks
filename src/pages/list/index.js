@@ -4,10 +4,12 @@ import {
     Input,
     Pagination,
     PaginationButton
- } from './styles';
+} from './styles';
 
 import Topbar from '../../components/topbar';
 import ItemList from '../../components/itemList';
+
+import Api from './service'
 
 
 export default class List extends React.Component{
@@ -22,24 +24,15 @@ export default class List extends React.Component{
         };
     }
 
-    async getList(){
-        try {
-            const response = await fetch('http://5d8b64ad3c0aaf0014342c2a.mockapi.io/api/v1/collaborator')
-            const data = await response.json()
-            this.setState({
-                list: data, 
-                filteredList: data, 
-                paginationCount: Math.round((data.length / 10)*1),
-            });
+    async componentDidMount() {
 
-        } catch (error) {
-            console.log(error)
-        }
-    }
+        const data = await Api.getList();
 
-    componentDidMount() {
-
-        this.getList();
+        this.setState({
+            list: data, 
+            filteredList: data, 
+            paginationCount: Math.round((data.length / 10)*1),
+        });
 
     }
 

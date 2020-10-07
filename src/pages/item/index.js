@@ -13,6 +13,8 @@ import {
 
 import Topbar from '../../components/topbar';
 
+import Api from './service'
+
 
 export default class Item extends React.Component{
     constructor(props){
@@ -25,29 +27,21 @@ export default class Item extends React.Component{
         };
     }
 
-    async getCollaborator(){
-        try {
+    async componentDidMount() {
 
-            const response = await fetch('http://5d8b64ad3c0aaf0014342c2a.mockapi.io/api/v1/collaborator/' + this.props.id)
-            const collaborator = await response.json()
-            this.setState({item: collaborator});
-            this.getFeedback();
+        this.getApi();
 
-        } catch (error) {
-            console.log(error)
-        }
     }
 
-    async getFeedback(){
-        try {
+    async getApi() {
 
-            const response = await fetch('http://5d8b64ad3c0aaf0014342c2a.mockapi.io/api/v1/collaborator/' + this.props.id +'/feedback')
-            const feedback = await response.json()
-            this.setState({feedback: feedback});
+        const getCollaborator = await Api.getCollaborator(this.props.id);
+        const getFeedback = await Api.getFeedback(this.props.id);
+        this.setState({
+            item: getCollaborator,
+            feedback: getFeedback
+        });
 
-        } catch (error) {
-            console.log(error)
-        }
     }
 
     arrayLike(liked){
@@ -86,7 +80,7 @@ export default class Item extends React.Component{
                 })
             })
             const like = await response.json()
-            this.getCollaborator();
+            this.getApi();
 
         } catch (error) {
             console.log(error)
@@ -107,17 +101,11 @@ export default class Item extends React.Component{
                 })
             })
             const like = await response.json()
-            this.getCollaborator();
+            this.getApi();
 
         } catch (error) {
             console.log(error)
         }
-    }
-
-    componentDidMount() {
-
-        this.getCollaborator();
-
     }
 
     createLikeIcon(liked){

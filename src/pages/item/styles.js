@@ -47,7 +47,8 @@ export const Text = styled.p`
 export const ListFeedback = styled.div`
     width: 100%;
     height: 300px;
-    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
     padding: 15px;
 `;
 
